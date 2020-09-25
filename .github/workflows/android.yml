@@ -18,9 +18,7 @@ jobs:
         with:
           java-version: 1.8
       - name: clone submosule
-        run: |
-          git submodule update --init --recursive
-          git submodule update --remote --recursive
+        run: git submodule update --init --recursive
       - name: set up NDK
         run: |
           echo "y" | sudo ${ANDROID_HOME}/tools/bin/sdkmanager
@@ -31,7 +29,9 @@ jobs:
           ${ANDROID_HOME}/ndk-bundle/ndk-build
           cd ${GITHUB_WORKSPACE}
       - name: build app
-        run: ./gradlew build;./gradlew assembleDebug
+        run: |
+          ./gradlew build
+          ./gradlew assembleDebug
       - name: upload apk
         uses: actions/upload-artifact@v2
         with:
